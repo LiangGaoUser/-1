@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zen Gomoku</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap');
+      
+      body {
+        font-family: 'Noto Serif JP', serif;
+        background-color: #1a1a1a;
+      }
+      
+      /* 
+         Realistic Kaya Wood Texture 
+         Combines a base color, linear gradients for grain, and an SVG noise filter for texture.
+      */
+      .wood-kaya {
+        background-color: #eabf6e; /* Kaya yellowish-gold */
+        background-image: 
+          /* Subtle vertical grain */
+          repeating-linear-gradient(
+            90deg, 
+            transparent 0px, 
+            transparent 2px, 
+            rgba(92, 58, 15, 0.03) 3px, 
+            transparent 6px
+          ),
+          /* Larger darker grain streaks */
+          repeating-linear-gradient(
+            90deg, 
+            transparent 0px, 
+            transparent 40px, 
+            rgba(92, 58, 15, 0.04) 42px, 
+            rgba(92, 58, 15, 0.02) 44px,
+            transparent 60px
+          ),
+          /* Wood noise texture via SVG data URI */
+          url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
+        box-shadow: inset 0 0 60px rgba(60, 40, 0, 0.2);
+      }
+
+      /* Darker side wood */
+      .wood-kaya-side {
+        background-color: #c59b4b;
+        background-image: 
+           repeating-linear-gradient(
+            180deg, 
+            rgba(0,0,0,0.05) 0px, 
+            transparent 2px, 
+            rgba(0,0,0,0.05) 4px
+           ),
+           url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.2'/%3E%3C/svg%3E");
+        box-shadow: inset 0 10px 20px rgba(0,0,0,0.3);
+      }
+
+      /* 
+         Black Stone (Slate) 
+         Deep matte black with a sharp, small specular highlight.
+      */
+      .stone-black {
+        background: radial-gradient(circle at 35% 25%, #666666 0%, #222222 20%, #080808 60%, #000000 100%);
+        box-shadow: 
+          1px 2px 4px rgba(0, 0, 0, 0.6), 
+          3px 6px 10px rgba(0,0,0,0.3);
+      }
+
+      /* 
+         White Stone (Clam Shell)
+         Creamy white with subtle striations and translucency.
+      */
+      .stone-white {
+        background: radial-gradient(circle at 35% 20%, #ffffff 0%, #f7f7f7 30%, #e0e0e0 70%, #bbbbbb 100%);
+        /* Subtle ring texture for shell lines */
+        background-image: 
+           radial-gradient(circle at 35% 20%, #ffffff 0%, #f7f7f7 30%, #e0e0e0 70%, #bbbbbb 100%),
+           repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 2px, rgba(0,0,0,0.02) 3px, transparent 4px);
+        background-blend-mode: multiply;
+        box-shadow: 
+          1px 2px 4px rgba(0, 0, 0, 0.4), 
+          3px 6px 10px rgba(0,0,0,0.2),
+          inset -2px -2px 5px rgba(0,0,0,0.1); /* Ambient occlusion */
+      }
+      
+      .last-move-marker {
+        animation: pulse-slow 2s infinite;
+      }
+      
+      @keyframes pulse-slow {
+        0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+        50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

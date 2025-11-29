@@ -1,0 +1,5 @@
+{
+  "name": "Zen Gomoku",
+  "description": "A realistic, visually stunning Gomoku (Five-in-a-Row) game featuring a wooden board aesthetic and an AI opponent powered by Gemini.",
+  "requestFramePermissions": []
+}
